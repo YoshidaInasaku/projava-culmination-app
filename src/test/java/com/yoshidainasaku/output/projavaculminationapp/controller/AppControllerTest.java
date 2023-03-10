@@ -12,12 +12,11 @@ import static org.junit.jupiter.api.Assertions.*;
 @WebMvcTest
 class AppControllerTest {
     @Autowired
-    MockMvc mockMvc;
+    private MockMvc mockMvc;
 
     @Test
     void ホーム画面にアクセスできる() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.get("/"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.view().name("home"));
-    }
-}
+    }}
