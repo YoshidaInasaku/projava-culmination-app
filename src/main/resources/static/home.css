@@ -33,3 +33,14 @@ input {
     border: 1px solid;
     border-collapse: collapse;
 }
+
+/* 更新ダイアログ */
+#update_dialog {
+    display: none;
+    background-color: #FFFFFF;
+    border: 2px double;
+    width: 500px;
+    position: fixed;
+    top: 120px;
+    z-index: 9999;
+}
