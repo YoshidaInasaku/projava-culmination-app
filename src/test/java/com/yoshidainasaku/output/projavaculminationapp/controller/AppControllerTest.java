@@ -28,7 +28,7 @@ class AppControllerTest {
 
     @Test
     void ホーム画面にアクセスできる() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get("/"))
+        mockMvc.perform(MockMvcRequestBuilders.get("/home"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("home"));
     }
@@ -43,7 +43,7 @@ class AppControllerTest {
                 .param("task", task)
                 .param("deadline", deadline))
                 .andExpect(MockMvcResultMatchers.status().is3xxRedirection())
-                .andExpect(MockMvcResultMatchers.redirectedUrl("/list"));
+                .andExpect(MockMvcResultMatchers.redirectedUrl("/home"));
 
         Mockito.verify(appDao, Mockito.times(1)).add(Mockito.any(AppController.TaskItem.class));
     }
@@ -56,7 +56,7 @@ class AppControllerTest {
         );
         Mockito.doReturn(taskItems).when(appDao).findAll();
 
-        mockMvc.perform(MockMvcRequestBuilders.get("/list"))
+        mockMvc.perform(MockMvcRequestBuilders.get("/home"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.view().name("home"))
                 .andExpect(MockMvcResultMatchers.model().attribute("taskList", taskItems));
@@ -69,7 +69,7 @@ class AppControllerTest {
         mockMvc.perform(MockMvcRequestBuilders.get("/delete")
                 .param("id", id))
                 .andExpect(MockMvcResultMatchers.status().is3xxRedirection())
-                .andExpect(MockMvcResultMatchers.redirectedUrl("/list"));
+                .andExpect(MockMvcResultMatchers.redirectedUrl("/home"));
 
         Mockito.verify(appDao, Mockito.times(1)).delete(id);
     }
@@ -86,7 +86,7 @@ class AppControllerTest {
                 .param("deadline", deadline)
                 .param("done", String.valueOf(true)))
                 .andExpect(MockMvcResultMatchers.status().is3xxRedirection())
-                .andExpect(MockMvcResultMatchers.redirectedUrl("/list"));
+                .andExpect(MockMvcResultMatchers.redirectedUrl("/home"));
 
         Mockito.verify(appDao, Mockito.times(1)).update(Mockito.any(AppController.TaskItem.class));
     }

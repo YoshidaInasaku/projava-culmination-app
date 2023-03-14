@@ -7,7 +7,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -23,8 +22,11 @@ public class AppController {
         this.dao = dao;
     }
 
-    @GetMapping("/")
-    String home() {
+    @GetMapping("/home")
+    String home(Model model) {
+        List<TaskItem> taskItems = dao.findAll();
+        model.addAttribute("taskList", taskItems);
+
         return "home";
     }
 
@@ -36,22 +38,14 @@ public class AppController {
 
         dao.add(item);
 
-        return "redirect:/list";
-    }
-
-    @GetMapping("/list")
-    String listItem(Model model) {
-        List<TaskItem> taskItems = dao.findAll();
-        model.addAttribute("taskList", taskItems);
-
-        return "home";
+        return "redirect:/home";
     }
 
     @GetMapping("/delete")
     String deleteItem(@RequestParam("id") String id) {
         dao.delete(id);
 
-        return "redirect:/list";
+        return "redirect:/home";
     }
 
     @GetMapping("/update")
@@ -63,6 +57,6 @@ public class AppController {
 
         dao.update(item);
 
-        return "redirect:/list";
+        return "redirect:/home";
     }
 }
