@@ -1,10 +1,11 @@
 package com.yoshidainasaku.output.projavaculminationapp.entity.repository;
 
 import com.yoshidainasaku.output.projavaculminationapp.entity.LoginUser;
-import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Repository
@@ -26,8 +27,15 @@ public class LoginUserRepository {
     }
 
     public Optional<LoginUser> findByEmail(String email) {
-        BeanPropertyRowMapper<LoginUser> rowMapper = new BeanPropertyRowMapper<>(LoginUser.class);
-        LoginUser loginUser = jdbcTemplate.queryForObject(SQL_FIND_BY_EMAIL, rowMapper, email);
+        List<Map<String, Object>> result = jdbcTemplate.queryForList(SQL_FIND_BY_EMAIL, email);
+        LoginUser loginUser = null;
+        for (Map<String, Object> user : result) {
+            loginUser = new LoginUser(
+                    (String) user.get("userId"),
+                    (String) user.get("userName"),
+                    (String) user.get("email"),
+                    (String) user.get("password"));
+        }
 
         return Optional.ofNullable(loginUser);
     }
