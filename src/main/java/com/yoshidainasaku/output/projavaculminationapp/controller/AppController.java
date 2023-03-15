@@ -22,6 +22,11 @@ public class AppController {
         this.dao = dao;
     }
 
+    @GetMapping("/login")
+    String login() {
+        return "login";
+    }
+
     @GetMapping("/home")
     String home(Model model) {
         List<TaskItem> taskItems = dao.findAll();

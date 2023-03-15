@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+    <head>
+        <meta charset="UTF-8">
+        <title>ログイン画面</title>
+    </head>
+    <body>
+        <h1>ログイン画面</h1>
+
+        <form th:action="@{/login}" method="post">
+            <label>メールアドレス</label>
+            <input name="username" placeholder="メールアドレス" />
+            <label>パスワード</label>
+            <input name="password" placeholder="パスワード" />
+            <button type="submit">ログイン</button>
+        </form>
+    </body>
+</html>
